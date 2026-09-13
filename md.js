@@ -36,50 +36,43 @@ function mdToCreateEl(markdown) {
  * @returns {void}
  */
 function processChild(node, parent) {
+	let el;
+
 	switch (node.type) {
 		case "paragraph":
-			// https://github.com/syntax-tree/mdast#link
-			const paragraph = document.createElement("p");
-			node.children.forEach((child) => processChild(child, paragraph));
-			parent.appendChild(paragraph);
+			el = document.createElement("p");
 			break;
 		case "text":
-			// https://github.com/syntax-tree/mdast#link
 			parent.appendChild(document.createTextNode(node.value));
-			break;
+			return;
 		case "strong":
-			// https://github.com/syntax-tree/mdast#link
-			const bold = document.createElement("strong");
-			processChild(node.children, bold);
-			parent.appendChild(bold);
+			el = document.createElement("strong");
 			break;
 		case "emphasis":
-			// https://github.com/syntax-tree/mdast#link
-			const italic = document.createElement("em");
-			node.children.forEach((child) => processChild(child, italic));
-			parent.appendChild(italic);
+			el = document.createElement("em");
 			break;
 		case "inlineCode":
-			// https://github.com/syntax-tree/mdast#link
-			const code = document.createElement("code");
-			code.appendChild(document.createTextNode(node.value));
-			parent.appendChild(code);
+			el = document.createElement("code");
+			el.appendChild(document.createTextNode(node.value));
 			break;
 		case "link":
-			// https://github.com/syntax-tree/mdast#link
-			const link = document.createElement("a");
-			link.href = node.url;
-			link.title = node.title;
-			node.children.forEach((child) => processChild(child, link));
-			parent.appendChild(link);
+			el = document.createElement("a");
+			el.href = node.url;
+			el.title = node.title;
 			break;
 		case "image":
-			// https://github.com/syntax-tree/mdast#link
-			const image = document.createElement("img");
-			image.src = node.url;
-			image.alt = node.alt;
-			image.title = node.title;
-			parent.appendChild(image);
+			el = document.createElement("img");
+			el.src = node.url;
+			el.alt = node.alt;
+			el.title = node.title;
 			break;
 	}
+
+	if (node.children) {
+		for (const child of node.children) {
+			processChild(child, el);
+		}
+	}
+
+	parent.appendChild(el);
 }
