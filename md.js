@@ -3,7 +3,7 @@ import { parse, render } from "https://esm.sh/@croct/md-lite@0.3.1";
 /**
  * Main export
  *
- * @todo Refactor to not use mdToHTML
+ * @todo Switch from mdToHTML to mdToCreateEl
  *
  * @param {string} markdown
  * @returns {HTMLElement}
@@ -43,3 +43,13 @@ function mdToHTML(markdown) {
 
 	return root;
 }
+
+/**
+ * Parses Markdown into an AST, then assembles an element based on the AST.
+ *
+ * @todo Implement
+ *
+ * @param {string} markdown
+ * @returns {HTMLElement}
+ */
+function mdToCreateEl(markdown) {}
