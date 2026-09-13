@@ -26,56 +26,55 @@ function mdToCreateEl(markdown) {
 
 /**
  *
- * @todo Switch implementation from md-lite's ast to mdast
- *
  * @param {*} node
  * @param {HTMlElement} parent
  * @returns void
  */
 function processChild(node, parent) {
 	switch (node.type) {
-		case "text":
-			parent.appendChild(document.createTextNode(node.content));
-			break;
-		case "bold":
-			const bold = document.createElement("strong");
-			processChild(node.children, bold);
-			parent.appendChild(bold);
-			break;
-		case "italic":
-			const italic = document.createElement("em");
-			processChild(node.children, italic);
-			parent.appendChild(italic);
-			break;
-		case "strike":
-			const strike = document.createElement("s");
-			processChild(node.children, strike);
-			parent.appendChild(strike);
-			break;
-		case "code":
-			const code = document.createElement("code");
-			code.appendChild(document.createTextNode(node.content));
-			parent.appendChild(code);
-			break;
-		case "link":
-			const link = document.createElement("a");
-			link.href = node.href;
-			processChild(node.children, link);
-			parent.appendChild(link);
-			break;
-		case "image":
-			const image = document.createElement("img");
-			image.src = node.src;
-			image.alt = node.alt;
-			parent.appendChild(image);
-			break;
 		case "paragraph":
+			// https://github.com/syntax-tree/mdast#link
 			const paragraph = document.createElement("p");
 			node.children.forEach((child) => processChild(child, paragraph));
 			parent.appendChild(paragraph);
 			break;
-		case "fragment":
-			node.children.forEach((child) => processChild(child, parent));
+		case "text":
+			// https://github.com/syntax-tree/mdast#link
+			parent.appendChild(document.createTextNode(node.value));
+			break;
+		case "strong":
+			// https://github.com/syntax-tree/mdast#link
+			const bold = document.createElement("strong");
+			processChild(node.children, bold);
+			parent.appendChild(bold);
+			break;
+		case "emphasis":
+			// https://github.com/syntax-tree/mdast#link
+			const italic = document.createElement("em");
+			node.children.forEach((child) => processChild(child, italic));
+			parent.appendChild(italic);
+			break;
+		case "inlineCode":
+			// https://github.com/syntax-tree/mdast#link
+			const code = document.createElement("code");
+			code.appendChild(document.createTextNode(node.value));
+			parent.appendChild(code);
+			break;
+		case "link":
+			// https://github.com/syntax-tree/mdast#link
+			const link = document.createElement("a");
+			link.href = node.url;
+			link.title = node.title;
+			node.children.forEach((child) => processChild(child, link));
+			parent.appendChild(link);
+			break;
+		case "image":
+			// https://github.com/syntax-tree/mdast#link
+			const image = document.createElement("img");
+			image.src = node.url;
+			image.alt = node.alt;
+			image.title = node.title;
+			parent.appendChild(image);
 			break;
 	}
 }
