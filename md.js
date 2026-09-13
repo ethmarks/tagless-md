@@ -25,7 +25,7 @@ function mdToCreateEl(markdown) {
 }
 
 /**
- * @typedef {"blockquote" | "break" | "code" | "definition" | "emphasis" | "heading" | "html" | "image" | "imageReference" | "inlineCode" | "link" | "linkReference" | "list" | "listItem" | "paragraph" | "strong" | "text" | "thematicBreak" } NodeType
+ * @typedef {"blockquote" | "break" | "code" | "definition" | "emphasis" | "heading" | "html" | "image" | "imageReference" | "inlineCode" | "link" | "linkReference" | "list" | "listItem" | "paragraph" | "root" | "strong" | "text" | "thematicBreak" } NodeType
  * @typedef {{type: NodeType, children?: Node[], value?: string, url?: string, alt?: string, title?: string}} Node
  */
 
@@ -36,35 +36,94 @@ function mdToCreateEl(markdown) {
  * @returns {void}
  */
 function processChild(node, parent) {
+	/** @type {HTMLElement} */
 	let el;
 
 	switch (node.type) {
-		case "paragraph":
-			el = document.createElement("p");
+		case "blockquote":
+			el = document.createElement("blockquote");
 			break;
-		case "text":
-			parent.appendChild(document.createTextNode(node.value));
-			return;
-		case "strong":
-			el = document.createElement("strong");
+
+		case "break":
+			el = document.createElement("br");
 			break;
+
+		case "code":
+			el = document.createElement("pre");
+			const code = document.createElement("code");
+			code.classList.add(`language-${node.lang}`);
+			code.appendChild(document.createTextNode(node.value));
+			el.appendChild(code);
+			break;
+
+		case "definition":
+			// [TODO]
+			break;
+
 		case "emphasis":
 			el = document.createElement("em");
 			break;
-		case "inlineCode":
-			el = document.createElement("code");
-			el.appendChild(document.createTextNode(node.value));
+
+		case "heading":
+			el = document.createElement(`h${node.depth}`);
 			break;
-		case "link":
-			el = document.createElement("a");
-			el.href = node.url;
-			el.title = node.title;
+
+		case "html":
+			// [TODO]
 			break;
+
 		case "image":
 			el = document.createElement("img");
 			el.src = node.url;
 			el.alt = node.alt;
 			el.title = node.title;
+			break;
+
+		case "imageReference":
+			// [TODO]
+			break;
+
+		case "inlineCode":
+			el = document.createElement("code");
+			el.appendChild(document.createTextNode(node.value));
+			break;
+
+		case "link":
+			el = document.createElement("a");
+			el.href = node.url;
+			el.title = node.title;
+			break;
+
+		case "linkReference":
+			// [TODO]
+			break;
+
+		case "list":
+			el = document.createElement(node.ordered ? "ol" : "ul");
+			break;
+
+		case "listItem":
+			el = document.createElement("li");
+			break;
+
+		case "paragraph":
+			el = document.createElement("p");
+			break;
+
+		case "root":
+			// [TODO]
+			break;
+
+		case "strong":
+			el = document.createElement("strong");
+			break;
+
+		case "text":
+			el = document.createTextNode(node.value);
+			break;
+
+		case "thematicBreak":
+			el = document.createElement("hr");
 			break;
 	}
 
