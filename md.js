@@ -25,10 +25,15 @@ function mdToCreateEl(markdown) {
 }
 
 /**
+ * @typedef {"blockquote" | "break" | "code" | "definition" | "emphasis" | "heading" | "html" | "image" | "imageReference" | "inlineCode" | "link" | "linkReference" | "list" | "listItem" | "paragraph" | "strong" | "text" | "thematicBreak" } NodeType
+ * @typedef {{type: NodeType, children?: Node[], value?: string, url?: string, alt?: string, title?: string}} Node
+ */
+
+/**
  *
- * @param {*} node
- * @param {HTMlElement} parent
- * @returns void
+ * @param {Node} node
+ * @param {HTMLElement} parent
+ * @returns {void}
  */
 function processChild(node, parent) {
 	switch (node.type) {
