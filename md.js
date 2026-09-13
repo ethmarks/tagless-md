@@ -1,4 +1,4 @@
-import { parse } from "https://esm.sh/@croct/md-lite@0.3.1";
+import { fromMarkdown } from "https://esm.sh/mdast-util-from-markdown@2?bundle";
 
 /**
  * Main export
@@ -9,7 +9,7 @@ import { parse } from "https://esm.sh/@croct/md-lite@0.3.1";
 export const mdToEl = mdToCreateEl;
 
 /**
- * Parses Markdown into an AST, then assembles an element based on the AST.
+ * Parses Markdown into an AST, then assembles an element from the AST.
  *
  * @param {string} markdown
  * @returns {HTMLElement}
@@ -17,7 +17,7 @@ export const mdToEl = mdToCreateEl;
 function mdToCreateEl(markdown) {
 	const root = document.createElement("div");
 
-	const ast = parse(markdown);
+	const ast = fromMarkdown(markdown);
 
 	ast.children.forEach((child) => processChild(child, root));
 
@@ -25,6 +25,8 @@ function mdToCreateEl(markdown) {
 }
 
 /**
+ *
+ * @todo Switch implementation from md-lite's ast to mdast
  *
  * @param {*} node
  * @param {HTMlElement} parent
