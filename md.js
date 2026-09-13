@@ -5,7 +5,7 @@ import { parse, render } from "https://esm.sh/@croct/md-lite@0.3.1";
  * @param {string} markdown
  * @returns {HTMLElement}
  */
-function mdToEl(markdown) {
+export function mdToEl(markdown) {
 	const root = document.createElement("div");
 
 	// [TODO] refactor mdToEl to use .createElement rather than innerHTML
