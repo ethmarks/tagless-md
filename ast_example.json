@@ -1,0 +1,36 @@
+{
+	"type": "fragment",
+	"children": [
+		{
+			"type": "text",
+			"content": "Tagless Markdown is a tool built for ",
+			"source": "Tagless Markdown is a tool built for "
+		},
+		{
+			"type": "link",
+			"href": "https://tagless.hackclub.com/",
+			"children": {
+				"type": "text",
+				"content": "Tagless",
+				"source": "Tagless"
+			},
+			"source": "[Tagless](https://tagless.hackclub.com/)"
+		},
+		{
+			"type": "text",
+			"content": " YSWS that renders Markdown in the browser using ",
+			"source": " YSWS that renders Markdown in the browser using "
+		},
+		{
+			"type": "code",
+			"content": ".createElement()",
+			"source": "`.createElement()`"
+		},
+		{
+			"type": "text",
+			"content": " to manipulate the DOM. The source code only contains minimal HTML boilerplate, and everything is done with JS.",
+			"source": " to manipulate the DOM. The source code only contains minimal HTML boilerplate, and everything is done with JS."
+		}
+	],
+	"source": "Tagless Markdown is a tool built for [Tagless](https://tagless.hackclub.com/) YSWS that renders Markdown in the browser using `.createElement()` to manipulate the DOM. The source code only contains minimal HTML boilerplate, and everything is done with JS."
+}
