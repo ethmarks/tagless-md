@@ -1,4 +1,4 @@
-import { parse } from "https://esm.sh/@croct/md-lite@0.3.1";
+import { fromMarkdown } from "https://esm.sh/mdast-util-from-markdown@2?bundle";
 
 /**
  * Main export
@@ -9,7 +9,7 @@ import { parse } from "https://esm.sh/@croct/md-lite@0.3.1";
 export const mdToEl = mdToCreateEl;
 
 /**
- * Parses Markdown into an AST, then assembles an element based on the AST.
+ * Parses Markdown into an AST, then assembles an element from the AST.
  *
  * @param {string} markdown
  * @returns {HTMLElement}
@@ -17,7 +17,7 @@ export const mdToEl = mdToCreateEl;
 function mdToCreateEl(markdown) {
 	const root = document.createElement("div");
 
-	const ast = parse(markdown);
+	const ast = fromMarkdown(markdown);
 
 	ast.children.forEach((child) => processChild(child, root));
 
@@ -25,55 +25,113 @@ function mdToCreateEl(markdown) {
 }
 
 /**
+ * @typedef {"blockquote" | "break" | "code" | "definition" | "emphasis" | "heading" | "html" | "image" | "imageReference" | "inlineCode" | "link" | "linkReference" | "list" | "listItem" | "paragraph" | "root" | "strong" | "text" | "thematicBreak" } NodeType
+ * @typedef {{type: NodeType, children?: Node[], value?: string, url?: string, alt?: string, title?: string}} Node
+ */
+
+/**
  *
- * @param {*} node
- * @param {HTMlElement} parent
- * @returns void
+ * @param {Node} node
+ * @param {HTMLElement} parent
+ * @returns {void}
  */
 function processChild(node, parent) {
+	/** @type {HTMLElement} */
+	let el;
+
 	switch (node.type) {
-		case "text":
-			parent.appendChild(document.createTextNode(node.content));
+		case "blockquote":
+			el = document.createElement("blockquote");
 			break;
-		case "bold":
-			const bold = document.createElement("strong");
-			processChild(node.children, bold);
-			parent.appendChild(bold);
+
+		case "break":
+			el = document.createElement("br");
 			break;
-		case "italic":
-			const italic = document.createElement("em");
-			processChild(node.children, italic);
-			parent.appendChild(italic);
-			break;
-		case "strike":
-			const strike = document.createElement("s");
-			processChild(node.children, strike);
-			parent.appendChild(strike);
-			break;
+
 		case "code":
+			el = document.createElement("pre");
 			const code = document.createElement("code");
-			code.appendChild(document.createTextNode(node.content));
-			parent.appendChild(code);
+			if (node.lang) code.classList.add(`language-${node.lang}`);
+			code.appendChild(document.createTextNode(node.value));
+			el.appendChild(code);
 			break;
-		case "link":
-			const link = document.createElement("a");
-			link.href = node.href;
-			processChild(node.children, link);
-			parent.appendChild(link);
+
+		case "definition":
+			// [TODO]
 			break;
+
+		case "emphasis":
+			el = document.createElement("em");
+			break;
+
+		case "heading":
+			el = document.createElement(`h${node.depth}`);
+			break;
+
+		case "html":
+			// [TODO]
+			break;
+
 		case "image":
-			const image = document.createElement("img");
-			image.src = node.src;
-			image.alt = node.alt;
-			parent.appendChild(image);
+			el = document.createElement("img");
+			el.src = node.url;
+			el.alt = node.alt;
+			el.title = node.title;
 			break;
+
+		case "imageReference":
+			// [TODO]
+			break;
+
+		case "inlineCode":
+			el = document.createElement("code");
+			el.appendChild(document.createTextNode(node.value));
+			break;
+
+		case "link":
+			el = document.createElement("a");
+			el.href = node.url;
+			el.title = node.title;
+			break;
+
+		case "linkReference":
+			// [TODO]
+			break;
+
+		case "list":
+			el = document.createElement(node.ordered ? "ol" : "ul");
+			break;
+
+		case "listItem":
+			el = document.createElement("li");
+			break;
+
 		case "paragraph":
-			const paragraph = document.createElement("p");
-			node.children.forEach((child) => processChild(child, paragraph));
-			parent.appendChild(paragraph);
+			el = document.createElement("p");
 			break;
-		case "fragment":
-			node.children.forEach((child) => processChild(child, parent));
+
+		case "root":
+			// [TODO]
+			break;
+
+		case "strong":
+			el = document.createElement("strong");
+			break;
+
+		case "text":
+			el = document.createTextNode(node.value);
+			break;
+
+		case "thematicBreak":
+			el = document.createElement("hr");
 			break;
 	}
+
+	if (node.children) {
+		for (const child of node.children) {
+			processChild(child, el);
+		}
+	}
+
+	parent.appendChild(el);
 }
