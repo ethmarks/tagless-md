@@ -28,6 +28,38 @@ container.appendChild(
 	),
 );
 
+container.appendChild(
+	mdToEl(
+		`
+---
+
+This is a test.
+
+**Bolded** text. _Italic_ text. [Link text](#).
+
+> Blockquote
+
+\`\`\`js
+console.log("testing code blocks");
+console.log("this one is multi-line!");
+\`\`\`
+
+- item a
+	- nested item i
+	- nested item ii
+	- nested item iii
+- item b
+
+1. item 1
+2. item 2
+
+![cat](https://cataas.com/cat)
+
+---
+		`,
+	),
+);
+
 const footer = document.createElement("footer");
 footer.classList.add("text-center");
 footer.appendChild(mdToEl("By [Ethan Marks](https://github.com/ethmarks)"));

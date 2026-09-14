@@ -51,7 +51,7 @@ function processChild(node, parent) {
 		case "code":
 			el = document.createElement("pre");
 			const code = document.createElement("code");
-			code.classList.add(`language-${node.lang}`);
+			if (node.lang) code.classList.add(`language-${node.lang}`);
 			code.appendChild(document.createTextNode(node.value));
 			el.appendChild(code);
 			break;
