@@ -23,11 +23,6 @@ tagline.classList.add("text-center");
 tagline.id = "tagline";
 container.appendChild(tagline);
 
-container.appendChild(
-	mdToEl(
-		"Tagless Markdown is a tool built for [Tagless](https://tagless.hackclub.com/) YSWS that renders Markdown in the browser using `.createElement()` to manipulate the DOM. The source code only contains minimal HTML boilerplate, and everything is done with JS.",
-	),
-);
 container.appendChild(document.createElement("hr"));
 
 const main = document.createElement("main");
@@ -39,7 +34,15 @@ inptLabel.htmlFor = "md-textarea";
 inpt.appendChild(inptLabel);
 const textarea = document.createElement("textarea");
 textarea.id = "md-textarea";
-textarea.rows = 25;
+textarea.rows = 20;
+textarea.value =
+	`
+# Tagless Markdown
+
+> Edit me by typing in the box on the left!
+
+Tagless Markdown is a tool built for [Tagless](https://tagless.hackclub.com/) YSWS that renders Markdown in the browser using \`.createElement()\` to manipulate the DOM. The source code only contains minimal HTML boilerplate, and everything is done with JS.
+	`.trim() + "\n\n";
 inpt.appendChild(textarea);
 main.appendChild(inpt);
 
@@ -62,3 +65,12 @@ footer.appendChild(mdToEl("By [Ethan Marks](https://github.com/ethmarks)"));
 container.appendChild(footer);
 
 document.body.appendChild(container);
+
+function render() {
+	const el = mdToEl(textarea.value);
+	outArea.replaceChildren(el);
+}
+
+textarea.addEventListener("input", render);
+
+render();
