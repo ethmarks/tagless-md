@@ -31,10 +31,8 @@ const main = document.createElement("main");
 const inpt = document.createElement("div");
 const inptLabel = document.createElement("label");
 inptLabel.appendChild(document.createTextNode("Input"));
-inptLabel.htmlFor = "md-textarea";
 inpt.appendChild(inptLabel);
 const textarea = document.createElement("textarea");
-textarea.id = "md-textarea";
 textarea.rows = 20;
 textarea.value = initialMd;
 inpt.appendChild(textarea);
@@ -43,12 +41,9 @@ main.appendChild(inpt);
 const out = document.createElement("div");
 const outLabel = document.createElement("label");
 outLabel.appendChild(document.createTextNode("Output"));
-outLabel.htmlFor = "md-out";
 out.appendChild(outLabel);
-const outArea = document.createElement("div");
-outArea.id = "md-out";
-outArea.classList.add("box");
-out.appendChild(outArea);
+const article = document.createElement("article");
+out.appendChild(article);
 main.appendChild(out);
 
 container.appendChild(main);
@@ -62,7 +57,7 @@ document.body.appendChild(container);
 
 function render() {
   const el = mdToEl(textarea.value);
-  outArea.replaceChildren(el);
+  article.replaceChildren(el);
 }
 
 textarea.addEventListener("input", render);

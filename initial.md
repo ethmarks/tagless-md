@@ -15,7 +15,6 @@ This is the HTML source for the page you're viewing, in its entirety:
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="text-scale" content="scale" />
     <script src="init.js" type="module"></script>
-    <script src="md.js" type="module"></script>
   </head>
   <body></body>
 </html>
