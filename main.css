@@ -10,6 +10,8 @@ main > div {
   flex: 1;
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  max-width: 100%;
 }
 
 #md-textarea,
@@ -21,8 +23,14 @@ main > div {
 
 #md-out {
   display: flex;
+  flex-direction: column;
   max-height: 100%;
   overflow-y: scroll;
+}
+
+#md-out pre {
+  white-space: pre;
+  overflow-x: auto;
 }
 
 label {
