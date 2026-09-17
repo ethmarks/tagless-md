@@ -17,7 +17,7 @@ container.appendChild(title);
 
 const tagline = document.createElement("div");
 tagline.appendChild(
-	document.createTextNode("A Markdown renderer without a single HTML tag"),
+  document.createTextNode("A Markdown renderer without a single HTML tag"),
 );
 tagline.classList.add("box");
 tagline.classList.add("text-center");
@@ -61,8 +61,8 @@ container.appendChild(footer);
 document.body.appendChild(container);
 
 function render() {
-	const el = mdToEl(textarea.value);
-	outArea.replaceChildren(el);
+  const el = mdToEl(textarea.value);
+  outArea.replaceChildren(el);
 }
 
 textarea.addEventListener("input", render);

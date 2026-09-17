@@ -15,15 +15,15 @@ export const mdToEl = mdToCreateEl;
  * @returns {HTMLElement}
  */
 function mdToCreateEl(markdown) {
-	const root = document.createElement("div");
+  const root = document.createElement("div");
 
-	const ast = fromMarkdown(markdown);
+  const ast = fromMarkdown(markdown);
 
-	for (const child of ast.children) {
-		root.appendChild(processNode(child));
-	}
+  for (const child of ast.children) {
+    root.appendChild(processNode(child));
+  }
 
-	return root;
+  return root;
 }
 
 /**
@@ -39,110 +39,110 @@ function mdToCreateEl(markdown) {
  * @returns {HTMLElement}
  */
 function processNode(node) {
-	/** @type {HTMLElement} */
-	let el;
+  /** @type {HTMLElement} */
+  let el;
 
-	switch (node.type) {
-		case "blockquote":
-			el = document.createElement("blockquote");
-			break;
+  switch (node.type) {
+    case "blockquote":
+      el = document.createElement("blockquote");
+      break;
 
-		case "break":
-			el = document.createElement("br");
-			break;
+    case "break":
+      el = document.createElement("br");
+      break;
 
-		case "code":
-			el = document.createElement("pre");
-			const code = document.createElement("code");
-			if (node.lang) code.classList.add(`language-${node.lang}`);
-			code.appendChild(document.createTextNode(node.value));
-			el.appendChild(code);
-			break;
+    case "code":
+      el = document.createElement("pre");
+      const code = document.createElement("code");
+      if (node.lang) code.classList.add(`language-${node.lang}`);
+      code.appendChild(document.createTextNode(node.value));
+      el.appendChild(code);
+      break;
 
-		case "definition":
-			// reasoning: I don't want to have to deal with references
-			console.warn("definitions are not supported");
-			break;
+    case "definition":
+      // reasoning: I don't want to have to deal with references
+      console.warn("definitions are not supported");
+      break;
 
-		case "emphasis":
-			el = document.createElement("em");
-			break;
+    case "emphasis":
+      el = document.createElement("em");
+      break;
 
-		case "heading":
-			el = document.createElement(`h${node.depth}`);
-			break;
+    case "heading":
+      el = document.createElement(`h${node.depth}`);
+      break;
 
-		case "html":
-			// reasoning: I can't really implement this without using .innerHTML,
-			// which is obviously against the rules ;)
-			console.warn("inline html is not supported");
-			break;
+    case "html":
+      // reasoning: I can't really implement this without using .innerHTML,
+      // which is obviously against the rules ;)
+      console.warn("inline html is not supported");
+      break;
 
-		case "image":
-			el = document.createElement("img");
-			el.src = node.url;
-			el.alt = node.alt;
-			el.title = node.title;
-			break;
+    case "image":
+      el = document.createElement("img");
+      el.src = node.url;
+      el.alt = node.alt;
+      el.title = node.title;
+      break;
 
-		case "imageReference":
-			// reasoning: I don't want to have to deal with references
-			console.warn("image references are not supported");
-			break;
+    case "imageReference":
+      // reasoning: I don't want to have to deal with references
+      console.warn("image references are not supported");
+      break;
 
-		case "inlineCode":
-			el = document.createElement("code");
-			el.appendChild(document.createTextNode(node.value));
-			break;
+    case "inlineCode":
+      el = document.createElement("code");
+      el.appendChild(document.createTextNode(node.value));
+      break;
 
-		case "link":
-			el = document.createElement("a");
-			el.href = node.url;
-			el.title = node.title;
-			break;
+    case "link":
+      el = document.createElement("a");
+      el.href = node.url;
+      el.title = node.title;
+      break;
 
-		case "linkReference":
-			// reasoning: I don't want to have to deal with references
-			console.warn("link references are not supported");
-			break;
+    case "linkReference":
+      // reasoning: I don't want to have to deal with references
+      console.warn("link references are not supported");
+      break;
 
-		case "list":
-			el = document.createElement(node.ordered ? "ol" : "ul");
-			break;
+    case "list":
+      el = document.createElement(node.ordered ? "ol" : "ul");
+      break;
 
-		case "listItem":
-			el = document.createElement("li");
-			break;
+    case "listItem":
+      el = document.createElement("li");
+      break;
 
-		case "paragraph":
-			el = document.createElement("p");
-			break;
+    case "paragraph":
+      el = document.createElement("p");
+      break;
 
-		case "root":
-			// this should be unreachable
-			console.warn(
-				"how does root.children contain another root node? what did you do?!",
-			);
-			break;
+    case "root":
+      // this should be unreachable
+      console.warn(
+        "how does root.children contain another root node? what did you do?!",
+      );
+      break;
 
-		case "strong":
-			el = document.createElement("strong");
-			break;
+    case "strong":
+      el = document.createElement("strong");
+      break;
 
-		case "text":
-			el = document.createTextNode(node.value);
-			break;
+    case "text":
+      el = document.createTextNode(node.value);
+      break;
 
-		case "thematicBreak":
-			el = document.createElement("hr");
-			break;
-	}
+    case "thematicBreak":
+      el = document.createElement("hr");
+      break;
+  }
 
-	if (node.children) {
-		for (const child of node.children) {
-			el.appendChild(processNode(child));
-		}
-	}
+  if (node.children) {
+    for (const child of node.children) {
+      el.appendChild(processNode(child));
+    }
+  }
 
-	return el;
+  return el;
 }
