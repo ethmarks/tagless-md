@@ -1,0 +1,26 @@
+main {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	gap: 1rem;
+	align-items: stretch;
+}
+
+main > div {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+#md-textarea,
+#md-out {
+	flex: 1;
+	box-sizing: border-box;
+	width: 100%;
+}
+
+#md-out {
+	display: flex;
+	max-height: 100%;
+	overflow-y: scroll;
+}
