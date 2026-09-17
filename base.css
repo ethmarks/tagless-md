@@ -33,6 +33,12 @@ p {
 	margin-bottom: 1rem;
 }
 
+hr {
+	background: #000;
+	height: 2px;
+	margin: 2rem;
+}
+
 /* Containers */
 .container {
 	width: 100%;
