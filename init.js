@@ -1,4 +1,4 @@
-import sheet from "https://cdn.jsdelivr.net/gh/pruger/tiny-brutalism-css/tiny-brutalism.css" with { type: "css" };
+import sheet from "./base.css" with { type: "css" };
 import { mdToEl } from "./md.js";
 
 // load tiny-brutalism.css
