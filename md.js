@@ -19,23 +19,26 @@ function mdToCreateEl(markdown) {
 
 	const ast = fromMarkdown(markdown);
 
-	ast.children.forEach((child) => processChild(child, root));
+	for (const child of ast.children) {
+		root.appendChild(processNode(child));
+	}
 
 	return root;
 }
 
 /**
+ * based on {@link https://github.com/syntax-tree/mdast}
  * @typedef {"blockquote" | "break" | "code" | "definition" | "emphasis" | "heading" | "html" | "image" | "imageReference" | "inlineCode" | "link" | "linkReference" | "list" | "listItem" | "paragraph" | "root" | "strong" | "text" | "thematicBreak" } NodeType
+ *
  * @typedef {{type: NodeType, children?: Node[], value?: string, url?: string, alt?: string, title?: string}} Node
  */
 
 /**
  *
  * @param {Node} node
- * @param {HTMLElement} parent
- * @returns {void}
+ * @returns {HTMLElement}
  */
-function processChild(node, parent) {
+function processNode(node) {
 	/** @type {HTMLElement} */
 	let el;
 
@@ -57,7 +60,8 @@ function processChild(node, parent) {
 			break;
 
 		case "definition":
-			// [TODO]
+			// reasoning: I don't want to have to deal with references
+			console.warn("definitions are not supported");
 			break;
 
 		case "emphasis":
@@ -69,7 +73,9 @@ function processChild(node, parent) {
 			break;
 
 		case "html":
-			// [TODO]
+			// reasoning: I can't really implement this without using .innerHTML,
+			// which is obviously against the rules ;)
+			console.warn("inline html is not supported");
 			break;
 
 		case "image":
@@ -80,7 +86,8 @@ function processChild(node, parent) {
 			break;
 
 		case "imageReference":
-			// [TODO]
+			// reasoning: I don't want to have to deal with references
+			console.warn("image references are not supported");
 			break;
 
 		case "inlineCode":
@@ -95,7 +102,8 @@ function processChild(node, parent) {
 			break;
 
 		case "linkReference":
-			// [TODO]
+			// reasoning: I don't want to have to deal with references
+			console.warn("link references are not supported");
 			break;
 
 		case "list":
@@ -111,7 +119,10 @@ function processChild(node, parent) {
 			break;
 
 		case "root":
-			// [TODO]
+			// this should be unreachable
+			console.warn(
+				"how does root.children contain another root node? what did you do?!",
+			);
 			break;
 
 		case "strong":
@@ -129,9 +140,9 @@ function processChild(node, parent) {
 
 	if (node.children) {
 		for (const child of node.children) {
-			processChild(child, el);
+			el.appendChild(processNode(child));
 		}
 	}
 
-	parent.appendChild(el);
+	return el;
 }
