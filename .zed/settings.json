@@ -1,0 +1,8 @@
+{
+	"languages": {
+		"Markdown": {
+			"formatter": "auto",
+			"soft_wrap": "bounded",
+		},
+	},
+}

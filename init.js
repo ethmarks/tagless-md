@@ -1,6 +1,7 @@
 import baseSheet from "./base.css" with { type: "css" };
 import mainSheet from "./main.css" with { type: "css" };
 import { mdToEl } from "./md.js";
+import initialMd from "./initial.md" with { type: "text" };
 
 // load tiny-brutalism.css
 document.adoptedStyleSheets = [baseSheet, mainSheet];
@@ -35,14 +36,7 @@ inpt.appendChild(inptLabel);
 const textarea = document.createElement("textarea");
 textarea.id = "md-textarea";
 textarea.rows = 20;
-textarea.value =
-	`
-# Tagless Markdown
-
-> Edit me by typing in the box on the left!
-
-Tagless Markdown is a tool built for [Tagless](https://tagless.hackclub.com/) YSWS that renders Markdown in the browser using \`.createElement()\` to manipulate the DOM. The source code only contains minimal HTML boilerplate, and everything is done with JS.
-	`.trim() + "\n\n";
+textarea.value = initialMd;
 inpt.appendChild(textarea);
 main.appendChild(inpt);
 
