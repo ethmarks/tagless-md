@@ -73,8 +73,8 @@ function processNode(node) {
     case "image":
       el = document.createElement("img");
       el.src = node.url;
-      el.alt = node.alt;
-      el.title = node.title;
+      if (node.alt) el.alt = node.alt;
+      if (node.title) el.title = node.title;
       break;
 
     case "imageReference":
@@ -90,7 +90,7 @@ function processNode(node) {
     case "link":
       el = document.createElement("a");
       el.href = node.url;
-      el.title = node.title;
+      if (node.title) el.title = node.title;
       break;
 
     case "linkReference":
