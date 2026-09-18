@@ -7,6 +7,10 @@ Markdown renderer site that doesn't use any HTML tags
 
 [![Screenshot of Tagless Markdown](./.github/screenshot.png)](https://ethmarks.github.io/tagless-md/)
 
+## Demo
+
+> Visit <https://ethmarks.github.io/tagless-md/>
+
 ## How it Works
 
 To create and manipulate DOM elements without using HTML tags, I mostly used `.createElement()` and `.appendChild()`.
