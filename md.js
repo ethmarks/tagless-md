@@ -1,20 +1,12 @@
 import { fromMarkdown } from "https://esm.sh/mdast-util-from-markdown@2?bundle";
 
 /**
- * Main export
- *
- * @param {string} markdown
- * @returns {HTMLElement}
- */
-export const mdToEl = mdToCreateEl;
-
-/**
  * Parses Markdown into an AST, then assembles an element from the AST.
  *
  * @param {string} markdown
  * @returns {HTMLElement}
  */
-function mdToCreateEl(markdown) {
+export function mdToEl(markdown) {
   const root = document.createElement("div");
 
   const ast = fromMarkdown(markdown);
