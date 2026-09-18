@@ -28,3 +28,13 @@ Obviously, the core of this markdown renderer site is the markdown renderer. Her
 5. After the switch statement, `processNode()` checks if the node has any children. If it does, it recursively processes them by passing them into `processNode()`, which repeats steps 4-6 for each of the children.
 6. Once the children are processed, `processNode()` returns the created element (with the children attached)
 7. Once the entire AST has been walked, parsed into elements, and appended to the root element, `mdToEl()` returns the root element to be injected into the page.
+
+## Acknowledgements
+
+- Thanks to the [unified](https://github.com/unifiedjs) team for making [mdast-util-from-markdown](https://github.com/syntax-tree/mdast-util-from-markdown), which is used to parse markdown into an AST
+- Thanks to [pruger](https://github.com/pruger) for making [tiny-brutalism.css](https://github.com/pruger/tiny-brutalism-css), which is used for the site styles (after heavy modifications by me)
+
+## License
+
+This project is under an MIT License. See [LICENSE](./LICENSE) for more
+information.
