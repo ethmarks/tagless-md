@@ -33,6 +33,8 @@ Obviously, the core of this markdown renderer site is the markdown renderer. Her
 6. Once the children are processed, `processNode()` returns the created element (with the children attached)
 7. Once the entire AST has been walked, parsed into elements, and appended to the root element, `mdToEl()` returns the root element to be injected into the page.
 
+I didn't implement a few of the AST node types: `definition`, `html`, `imageReference`, and `linkReference`. I didn't implement `html` because I would probably need to use `.innerHTML` or similar, which is obviously against the Tagless rules. I didn't implement the others because they're way more complicated than the other node types, and also I've never seen anyone ever actually use them.
+
 ## Acknowledgements
 
 - Thanks to the [unified](https://github.com/unifiedjs) team for making [mdast-util-from-markdown](https://github.com/syntax-tree/mdast-util-from-markdown), which is used to parse markdown into an AST
