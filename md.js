@@ -12,7 +12,8 @@ export function mdToEl(markdown) {
   const ast = fromMarkdown(markdown);
 
   for (const child of ast.children) {
-    root.appendChild(processNode(child));
+    const el = processNode(child);
+    if (el) root.appendChild(el);
   }
 
   return root;
@@ -28,7 +29,7 @@ export function mdToEl(markdown) {
 /**
  *
  * @param {Node} node
- * @returns {HTMLElement}
+ * @returns {HTMLElement | undefined}
  */
 function processNode(node) {
   /** @type {HTMLElement} */
@@ -130,7 +131,7 @@ function processNode(node) {
       break;
   }
 
-  if (node.children) {
+  if (node.children && el) {
     for (const child of node.children) {
       el.appendChild(processNode(child));
     }
