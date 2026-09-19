@@ -6,7 +6,9 @@ import mainSheet from "./main.css" with { type: "css" };
 import { mdToEl } from "./md.js";
 
 // the initial content of the textarea
-import initialMd from "./initial.md" with { type: "text" };
+// chromium doesn't support `with { type: "text" }` so I had to change it
+const initialMdResponse = await fetch("./initial.md");
+const initialMd = await initialMdResponse.text();
 
 // actually add the stylesheets to the page
 document.adoptedStyleSheets = [baseSheet, mainSheet];
