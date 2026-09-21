@@ -9,6 +9,7 @@ Markdown renderer site that doesn't use any HTML tags
 
 ## Demo
 
+> [!TIP]
 > Visit <https://ethmarks.github.io/tagless-md/>
 
 ## How it Works
